@@ -1,8 +1,7 @@
+import 'package:auryn/entities/discover_media.dart';
+import 'package:auryn/models/tmdb.dart';
+import 'package:auryn/service_locator.dart';
 import 'package:flutter/material.dart';
-
-import '../entities/discover_media.dart';
-import '../models/tmdb.dart';
-import '../service_locator.dart';
 
 class DiscoverTab extends StatelessWidget {
   @override

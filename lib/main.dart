@@ -1,9 +1,7 @@
+import 'package:auryn/scenes/detail/detail_scene.dart';
+import 'package:auryn/scenes/home/home_scene.dart';
+import 'package:auryn/scenes/splash/splash_scene.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/page_transitions_theme.dart';
-
-import 'detail/detail_scene.dart';
-import 'home/home_scene.dart';
-import 'splash/splash_scene.dart';
 
 void main() => runApp(MyApp());
 

@@ -1,10 +1,9 @@
+import 'package:auryn/scenes/home/discover_tab.dart';
+import 'package:auryn/scenes/home/home_page_route.dart';
+import 'package:auryn/scenes/home/home_tab_bar.dart';
+import 'package:auryn/scenes/home/movie_tab.dart';
+import 'package:auryn/scenes/home/tvshow_tab.dart';
 import 'package:flutter/material.dart';
-
-import 'discover_tab.dart';
-import 'home_page_route.dart';
-import 'home_tab_bar.dart';
-import 'movie_tab.dart';
-import 'tvshow_tab.dart';
 
 class HomeScene extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();

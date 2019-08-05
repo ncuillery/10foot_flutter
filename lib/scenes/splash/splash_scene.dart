@@ -1,9 +1,8 @@
+import 'package:auryn/models/tmdb.dart';
+import 'package:auryn/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import '../service_locator.dart';
-import '../models/tmdb.dart';
 
 class SplashScene extends StatefulWidget {
   @override
