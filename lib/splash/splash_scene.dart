@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../service_locator.dart';
+import '../models/tmdb.dart';
 
 class SplashScene extends StatefulWidget {
   @override
@@ -9,11 +13,13 @@ class SplashScene extends StatefulWidget {
 class _SplashSceneState extends State<SplashScene> {
   String currentAnimation = 'In';
 
-  void _handleComplete(String animationName) {
+  void _handleComplete (String animationName) async {
     if (animationName == 'In') {
-      Future.delayed(Duration(seconds: 1), () {
-        setState(() => currentAnimation = 'Out');
-      });
+      // Do time-consuming tasks
+      await DotEnv().load();
+      sl.registerSingleton<TmdbModel>(TmdbModel());
+      await sl.get<TmdbModel>().fetchDiscoverMedias();
+      setState(() => currentAnimation = 'Out');
     } else if (animationName == 'Out') {
       Navigator.of(context).pushNamed('/home');
     }
