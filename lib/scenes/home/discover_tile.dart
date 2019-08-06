@@ -14,12 +14,15 @@ class _DiscoverTileButton extends StatelessWidget {
     }
 
     final Widget image = discoverMedia.backdrop_path != null
-      ? Image.network('http://image.tmdb.org/t/p/w1280${discoverMedia.backdrop_path}')
+      ? Hero(
+          tag: discoverMedia.id,
+          child: Image.network('http://image.tmdb.org/t/p/w1280${discoverMedia.backdrop_path}')
+        )
       : Container();
 
     return FlatButton(
       focusNode: Focusable.of(context).focusNode,
-      onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed('/detail'),
+      onPressed: () => Navigator.of(context, rootNavigator: true).pushNamed('/detail', arguments: discoverMedia),
       padding: EdgeInsets.all(0.0),
       child: AspectRatio(
         aspectRatio: 16/9,
