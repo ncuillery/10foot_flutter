@@ -39,12 +39,18 @@ class _FocusableState extends State<Focusable> {
   bool hasFocus = false;
 
   void _handleFocusChange() {
-    if (focusNode.hasFocus && widget.onFocus != null) {
-      widget.onFocus();
-    }
+    final RenderObject object = context.findRenderObject();
+    final RenderAbstractViewport viewport = RenderAbstractViewport.of(object);
+    final ScrollableState scrollableState = Scrollable.of(context);
 
-    if (!focusNode.hasFocus && widget.onBlur != null) {
-      widget.onBlur();
+    if (scrollableState != null) {
+      ScrollPosition position = scrollableState.position;
+
+      if (position.pixels > viewport.getOffsetToReveal(object, 0.0).offset) {
+        Scrollable.ensureVisible(this.context, duration: Duration(milliseconds: 500), alignment: 0);
+      } else if (position.pixels < viewport.getOffsetToReveal(object, 1.0).offset) {
+        Scrollable.ensureVisible(this.context, duration: Duration(milliseconds: 500), alignment: 1);
+      }
     }
 
     setState(() {
