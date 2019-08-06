@@ -1,3 +1,4 @@
+import 'package:auryn/models/dpad_navigation.dart';
 import 'package:auryn/models/tmdb.dart';
 import 'package:auryn/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _SplashSceneState extends State<SplashScene> {
     if (animationName == 'In') {
       // Do time-consuming tasks
       await DotEnv().load();
+      sl.registerSingleton<DpadNavigationModel>(DpadNavigationModel());
       sl.registerSingleton<TmdbModel>(TmdbModel());
       await sl.get<TmdbModel>().fetchDiscoverMedias();
       setState(() => currentAnimation = 'Out');
