@@ -1,4 +1,23 @@
+import 'package:auryn/widgets/focusable.dart';
 import 'package:flutter/material.dart';
+
+class _HomeTabBarButton extends StatelessWidget {
+  final Function onPressed;
+  final String title;
+
+  const _HomeTabBarButton({Key key, this.onPressed, this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      focusNode: Focusable.of(context).focusNode,
+      onPressed: () => this.onPressed(),
+      child: Text(title),
+      textColor: Colors.white,
+    );
+  }
+}
+
 
 class HomeTabBar extends StatelessWidget {
   final Function onTabPress;
@@ -10,20 +29,14 @@ class HomeTabBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        FlatButton(
-          onPressed: () => this.onTabPress('/'),
-          child: Text('Discover'),
-          textColor: Colors.white,
+        Focusable(
+          child: _HomeTabBarButton(title: 'Discover', onPressed: () => this.onTabPress('/')),
         ),
-        FlatButton(
-          onPressed: () => this.onTabPress('/tvshow'),
-          child: Text('TV Shows'),
-          textColor: Colors.white,
+        Focusable(
+          child: _HomeTabBarButton(title: 'TV Shows', onPressed: () => this.onTabPress('/tvshow')),
         ),
-        FlatButton(
-          onPressed: () => this.onTabPress('/movie'),
-          child: Text('Movies'),
-          textColor: Colors.white,
+        Focusable(
+          child: _HomeTabBarButton(title: 'Movies', onPressed: () => this.onTabPress('/movies')),
         ),
       ],
     );

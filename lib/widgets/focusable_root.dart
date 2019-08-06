@@ -3,16 +3,16 @@ import 'package:auryn/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FocusableRoot extends StatefulWidget {
+class _FocusableRootContent extends StatefulWidget {
   final Widget child;
 
-  const FocusableRoot({Key key, this.child}) : super(key: key);
+  const _FocusableRootContent({Key key, this.child}) : super(key: key);
 
   @override
-  _FocusableRootState createState() => _FocusableRootState();
+  _FocusableRootContentState createState() => _FocusableRootContentState();
 }
 
-class _FocusableRootState extends State<FocusableRoot> {
+class _FocusableRootContentState extends State<_FocusableRootContent> {
   FocusAttachment _focusAttachment;
 
   void _handleKey(event) {
@@ -51,4 +51,19 @@ class _FocusableRootState extends State<FocusableRoot> {
     return widget.child;
   }
 
+}
+
+class FocusableRoot extends StatelessWidget {
+  final Widget child;
+
+  const FocusableRoot({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultFocusTraversal(
+      child: _FocusableRootContent(
+        child: child
+      )
+    );
+  }
 }
