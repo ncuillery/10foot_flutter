@@ -1,6 +1,8 @@
 import 'package:auryn/models/dpad_navigation.dart';
 import 'package:auryn/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 class _FocusableInherited extends InheritedWidget {
   final FocusNode focusNode;
@@ -33,7 +35,7 @@ class Focusable extends StatefulWidget {
 
 class _FocusableState extends State<Focusable> {
   FocusAttachment _focusAttachment;
-  FocusNode focusNode = FocusNode(debugLabel: 'Focusable Focus Node');
+  FocusNode focusNode;
   bool hasFocus = false;
 
   void _handleFocusChange() {
@@ -50,8 +52,36 @@ class _FocusableState extends State<Focusable> {
     });
   }
 
+  void _press() {
+    final RenderBox renderBox = context.findRenderObject();
+    BoxHitTestResult result = BoxHitTestResult();
+    renderBox.hitTest(result, position: Offset(context.size.width / 2, context.size.height / 2));
+
+    // https://github.com/flutter/flutter/issues/33610#issuecomment-514733614
+    result.path.forEach((entry){
+      print(entry.target.runtimeType);
+
+      if(entry.target is RenderSemanticsGestureHandler){
+        var target = entry.target as RenderSemanticsGestureHandler;
+        target.onTap();
+      }
+    });
+  }
+
+  bool _handleKey(FocusNode node, RawKeyEvent event) {
+    if (event is RawKeyUpEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.enter || event.logicalKey == LogicalKeyboardKey.select) {
+        _press();
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   @override
   void initState() {
+    focusNode = FocusNode(debugLabel: 'Focusable Focus Node', onKey: _handleKey);
     _focusAttachment = focusNode.attach(context);
     focusNode.addListener(_handleFocusChange);
     super.initState();
